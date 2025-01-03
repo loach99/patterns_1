@@ -1,8 +1,14 @@
 import com.github.javafaker.Faker;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
-import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.time.Duration;
 
@@ -14,15 +20,32 @@ import static com.codeborne.selenide.Selenide.open;
 public class TestData {
 
         private static Faker faker;
+        private WebDriver driver;
 
-        @BeforeEach
-
-        void setup() {
-                WebDriverManager.chromedriver().setup();
-
-                open("http://localhost:9999/");
+        @BeforeAll
+        static void setUpAll() {
+            WebDriverManager.chromedriver().setup();
         }
-
+    
+        @BeforeEach
+        void setUp() {
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("start-maximized");
+            options.addArguments("disable-infobars");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--headless");
+            options.addArguments("--disable-extensions");
+            options.addArguments("--disable-gpu");
+            driver = new ChromeDriver(options);
+        }
+    
+        @AfterEach
+        void tearDown() {
+            if (driver != null) {
+                driver.quit();
+            }
+        }
         @Test
 
         void positiveTest() {
