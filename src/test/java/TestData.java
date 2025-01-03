@@ -24,7 +24,7 @@ public class TestData {
 
         @BeforeAll
         static void setUpAll() {
-            WebDriverManager.chromedriver().setup();
+            WebDriverManager.chromedriver().browserVersion("122").setup();
         }
     
         @BeforeEach
