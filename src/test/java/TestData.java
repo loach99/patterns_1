@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
-
+import org.junit.jupiter.api.BeforeEach;
 import java.time.Duration;
 
 import static com.codeborne.selenide.Condition.*;
@@ -9,7 +9,10 @@ import static com.codeborne.selenide.Selenide.$;
 
 
 public class TestData {
-
+    @BeforeEach
+    void setup() {
+        open("http://localhost:9999/");
+    }
     @Test
 
     void positiveTest() {
